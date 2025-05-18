@@ -12,7 +12,7 @@ let handler = async (m, { text, usedPrefix, command }) => {
 // • Credits : wa.me/62895322391225 [ Asyl ]
 // • Feature : ${text}
 
-\n${m.quoted.text}`),
+\n${m.quoted.text}`)
     );
     let key = await conn.sendMessage(
       m.chat,
@@ -21,7 +21,7 @@ let handler = async (m, { text, usedPrefix, command }) => {
       },
       {
         quoted: m,
-      },
+      }
     );
     await conn.sendMessage(
       m.chat,
@@ -31,7 +31,7 @@ let handler = async (m, { text, usedPrefix, command }) => {
       },
       {
         quored: m,
-      },
+      }
     );
   } else if (command === "df") {
     let path = `plugins/${text}.js`;
@@ -42,7 +42,7 @@ let handler = async (m, { text, usedPrefix, command }) => {
       },
       {
         quoted: m,
-      },
+      }
     );
     if (!fs.existsSync(path))
       return conn.sendMessage(
@@ -53,7 +53,7 @@ let handler = async (m, { text, usedPrefix, command }) => {
         },
         {
           quored: m,
-        },
+        }
       );
     fs.unlinkSync(path);
     await conn.sendMessage(
@@ -64,7 +64,7 @@ let handler = async (m, { text, usedPrefix, command }) => {
       },
       {
         quored: m,
-      },
+      }
     );
   }
 };
@@ -72,4 +72,5 @@ handler.help = ["sf", "df"].map((v) => v + " *[reply code/filename]*");
 handler.tags = ["owner"];
 handler.command = /^(sf|df)$/i;
 handler.rowner = true;
+handler.owner = true;
 module.exports = handler;

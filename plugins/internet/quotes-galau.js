@@ -21,6 +21,7 @@ function pickRandom(list) {
 }
 
 global.galau = [
+  "Aku Tidak Pernah Sesedih ini seblumnya :')",
   "Gak salah kalo aku lebih berharap sama orang yang lebih pasti tanpa khianati janji-janji",
   "Rasanya baru kemarin kamu menawariku seblak. Lalu entah mengapa hari ini menanyakan kabar pun tidak.\n~vinaa",
   "What's the point of us being close yesterday?\n~Vinaa",

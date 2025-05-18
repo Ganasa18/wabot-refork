@@ -39,6 +39,7 @@ const delay = (ms) =>
     this.pushMessage(chatUpdate.messages).catch(console.error);
     let m = chatUpdate.messages[chatUpdate.messages.length - 1];
     if (!m) return;
+
     // Abaikan pesan dari bot sendiri
     if (m.key.fromMe) return;
     if (m.message?.viewOnceMessageV2)
@@ -72,19 +73,23 @@ const delay = (ms) =>
         let member = await (
           await conn.groupMetadata(m.chat)
         ).participants.map((a) => a.id);
-        
+
         db.data.chats[m.chat].member = member;
         db.data.chats[m.chat].chat += 1;
       }
-            if (m.mtype === 'GROUP_CREATE') {
-                await conn.reply(m.chat, `Invite Group
+      if (m.mtype === "GROUP_CREATE") {
+        await conn.reply(
+          m.chat,
+          `Invite Group
 • 30 Day / Rp 7k
 • Permanen  / Rp 10k
 
-Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
+Jika berminat hubungi: @${global.owner[0]} untuk order`,
+          m
+        );
         await conn.groupLeave(m.chat);
-        }
-        
+      }
+
       if (
         m.messageStubType ===
         (WAMessageStubType.CALL_MISSED_VOICE ||
@@ -93,12 +98,12 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
         await conn.reply(
           m.chat,
           "*[ System Notif ]* You are call this bot, I will blockir You",
-          null,
+          null
         );
         await conn.delay(1000);
         await conn.updateBlockStatus(m.chat, "block");
       }
-    
+
       if (isROwner) {
         db.data.users[m.sender].premium = true;
         db.data.users[m.sender].premiumDate = "PERMANENT";
@@ -132,7 +137,7 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
         opts["self"]
       )
         return;
-      
+
       if (opts["swonly"] && m.chat !== "status@broadcast") return;
 
       if (typeof m.text !== "string") m.text = "";
@@ -147,7 +152,7 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
 
       const groupMetadata =
         (m.isGroup ? (conn.chats[m.chat] || {}).metadata : {}) || {};
-      
+
       const participants = (m.isGroup ? groupMetadata.participants : []) || [];
       const user =
         (m.isGroup
@@ -186,27 +191,27 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
         let _prefix = plugin.customPrefix
           ? plugin.customPrefix
           : conn.prefix
-            ? conn.prefix
-            : global.prefix;
+          ? conn.prefix
+          : global.prefix;
         let match = (
           _prefix instanceof RegExp // RegExp Mode?
             ? [[_prefix.exec(m.text), _prefix]]
             : Array.isArray(_prefix) // Array?
-              ? _prefix.map((p) => {
-                  let re =
-                    p instanceof RegExp // RegExp in Array?
-                      ? p
-                      : new RegExp(str2Regex(p));
-                  return [re.exec(m.text), re];
-                })
-              : typeof _prefix === "string" // String?
-                ? [
-                    [
-                      new RegExp(str2Regex(_prefix)).exec(m.text),
-                      new RegExp(str2Regex(_prefix)),
-                    ],
-                  ]
-                : [[[], new RegExp()]]
+            ? _prefix.map((p) => {
+                let re =
+                  p instanceof RegExp // RegExp in Array?
+                    ? p
+                    : new RegExp(str2Regex(p));
+                return [re.exec(m.text), re];
+              })
+            : typeof _prefix === "string" // String?
+            ? [
+                [
+                  new RegExp(str2Regex(_prefix)).exec(m.text),
+                  new RegExp(str2Regex(_prefix)),
+                ],
+              ]
+            : [[[], new RegExp()]]
         ).find((p) => p[1]);
         if (typeof plugin.before === "function")
           if (
@@ -232,7 +237,7 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
         if (opts && match && m) {
           let result =
             ((opts?.["multiprefix"] ?? true) && (match[0] || "")[0]) ||
-            ((opts?.["noprefix"] ?? false) ? null : (match[0] || "")[0]);
+            (opts?.["noprefix"] ?? false ? null : (match[0] || "")[0]);
           usedPrefix = result;
           let noPrefix;
           if (isOwner) {
@@ -254,7 +259,7 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
             (prefixCommand instanceof RegExp && prefixCommand.test(command)) ||
             (Array.isArray(prefixCommand) &&
               prefixCommand.some((cmd) =>
-                cmd instanceof RegExp ? cmd.test(command) : cmd === command,
+                cmd instanceof RegExp ? cmd.test(command) : cmd === command
               )) ||
             (typeof prefixCommand === "string" && prefixCommand === command);
           m.prefix = !!result;
@@ -339,7 +344,7 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
           m.command = command;
           m.isCommand = true;
           if (m.isCommand) {
-            let now = Date.now()
+            let now = Date.now();
             if (m.command in global.db.data.respon) {
               cmd = global.db.data.respon[m.command];
               if (!isNumber(cmd.total)) cmd.total = 1;
@@ -371,7 +376,7 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
               {
                 text: limit,
               },
-              { quoted: m },
+              { quoted: m }
             );
             continue;
           }
@@ -382,7 +387,7 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
               {
                 text: level,
               },
-              { quoted: m },
+              { quoted: m }
             );
             continue;
           }
@@ -433,7 +438,7 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
 *• Error Log :*
 \`\`\`${text}\`\`\`
 `.trim(),
-                      fkontak,
+                      fkontak
                     );
                 }
                 m.reply("*[ system notice ]* Terjadi kesalahan pada bot !");
@@ -453,7 +458,7 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
         }
       }
     } catch (e) {
-     console.error(e);
+      console.error(e);
     } finally {
       if (opts["queque"] && m.text) {
         const quequeIndex = this.msgqueque.indexOf(m.id || m.key.id);
@@ -500,151 +505,192 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
         await this.chatRead(
           m.chat,
           m.isGroup ? m.sender : undefined,
-          m.id || m.key.id,
+          m.id || m.key.id
         ).catch(() => {});
     }
   },
   async participantsUpdate({ id, participants, action }) {
-  if (opts["self"]) return;
-  if (global.isInit) return;
-  let chat = global.db.data.chats[id] || {};
-  let text = "";
-  switch (action) {
-    case "add":
-    case "remove":
-      if (chat.welcome) {
-        let groupMetadata =
-          (await this.groupMetadata(id)) || (conn.chats[id] || {}).metadata;
-        for (let user of participants) {
-          let pp = "https://raw.githubusercontent.com/Fiisya/uploads/main/uploads/1746642961098.jpeg";
-          let gpname = await this.getName(id);
-          let nama = await this.getName(user);
-          let fakegc = {
-            key: {
-              participant: "0@s.whatsapp.net",
-              remoteJid: "0@s.whatsapp.net"
-            },
-            message: {
-              groupInviteMessage: {
-                groupJid: "120363305260394129@g.us",
-                inviteCode: "m",
-                groupName: gpname,
-                caption: gpname,
-                jpegThumbnail: null
-              }
-            }
-          };
-          let member = groupMetadata.participants.length;
-          try {
-            pp = await this.profilePictureUrl(user, "image").catch(e => pp);
-          } catch (e) {}
-
-          let msg = generateWAMessageFromContent(id, {
-            viewOnceMessage: {
+    if (opts["self"]) return;
+    if (global.isInit) return;
+    let chat = global.db.data.chats[id] || {};
+    let text = "";
+    switch (action) {
+      case "add":
+      case "remove":
+        if (chat.welcome) {
+          let groupMetadata =
+            (await this.groupMetadata(id)) || (conn.chats[id] || {}).metadata;
+          for (let user of participants) {
+            let pp =
+              "https://raw.githubusercontent.com/Fiisya/uploads/main/uploads/1746642961098.jpeg";
+            let gpname = await this.getName(id);
+            let nama = await this.getName(user);
+            let fakegc = {
+              key: {
+                participant: "0@s.whatsapp.net",
+                remoteJid: "0@s.whatsapp.net",
+              },
               message: {
-                messageContextInfo: {
-                  deviceListMetadata: {},
-                  deviceListMetadataVersion: 2
+                groupInviteMessage: {
+                  groupJid: "120363305260394129@g.us",
+                  inviteCode: "m",
+                  groupName: gpname,
+                  caption: gpname,
+                  jpegThumbnail: null,
                 },
-                interactiveMessage: proto.Message.InteractiveMessage.create({
-                  contextInfo: {
-                    mentionedJid: [user],
-                    isForwarded: true,
-                    forwardedNewsletterMessageInfo: {
-                      newsletterJid: "120363380343761245@newsletter",
-                      newsletterName: "Powered By Asyl🐉",
-                      serverMessageId: -1
+              },
+            };
+            let member = groupMetadata.participants.length;
+            try {
+              pp = await this.profilePictureUrl(user, "image").catch((e) => pp);
+            } catch (e) {}
+
+            let msg = generateWAMessageFromContent(
+              id,
+              {
+                viewOnceMessage: {
+                  message: {
+                    messageContextInfo: {
+                      deviceListMetadata: {},
+                      deviceListMetadataVersion: 2,
                     },
-                    externalAdReply: {
-                      title: action === "add"
-                        ? "\n──────< ᴡ ᴇ ʟ ᴄ ᴏ ᴍ ᴇ >───────\n"
-                        : "\n──────< ʟ ᴇ ᴀ ᴠ ɪ ɴ ɢ >──────\n",
-                      body: action === "add"
-                        ? `👋Welcome To ${nama} from ${gpname} at ${moment.tz("Asia/Makassar").format("HH:mm:ss")}`
-                        : `👋 Sayonara ${nama} leaving from ${gpname} at ${moment.tz("Asia/Makassar").format("HH:mm:ss")}`,
-                      thumbnailUrl: pp,
-                      mediaType: 1,
-                      renderLargerThumbnail: true
-                    }
-                  },
-                  body: proto.Message.InteractiveMessage.Body.create({ text: "" }),
-                  footer: proto.Message.InteractiveMessage.Footer.create({ text: wm }),
-                  header: proto.Message.InteractiveMessage.Header.create({
-                    title: action === "add"
-                      ? `┌─⭓「 *W E L C O M E* 」
+                    interactiveMessage: proto.Message.InteractiveMessage.create(
+                      {
+                        contextInfo: {
+                          mentionedJid: [user],
+                          isForwarded: true,
+                          forwardedNewsletterMessageInfo: {
+                            newsletterJid: "120363380343761245@newsletter",
+                            newsletterName: "Powered By Fuzan🐉",
+                            serverMessageId: -1,
+                          },
+                          externalAdReply: {
+                            title:
+                              action === "add"
+                                ? "\n──────< ᴡ ᴇ ʟ ᴄ ᴏ ᴍ ᴇ >───────\n"
+                                : "\n──────< ʟ ᴇ ᴀ ᴠ ɪ ɴ ɢ >──────\n",
+                            body:
+                              action === "add"
+                                ? `👋Welcome To ${nama} from ${gpname} at ${moment
+                                    .tz("Asia/Jakarta")
+                                    .format("HH:mm:ss")}`
+                                : `👋 Sayonara ${nama} leaving from ${gpname} at ${moment
+                                    .tz("Asia/Jakarta")
+                                    .format("HH:mm:ss")}`,
+                            thumbnailUrl: pp,
+                            mediaType: 1,
+                            renderLargerThumbnail: true,
+                          },
+                        },
+                        body: proto.Message.InteractiveMessage.Body.create({
+                          text: "",
+                        }),
+                        footer: proto.Message.InteractiveMessage.Footer.create({
+                          text: wm,
+                        }),
+                        header: proto.Message.InteractiveMessage.Header.create({
+                          title:
+                            action === "add"
+                              ? `┌─⭓「 *W E L C O M E* 」
 │ *• Name group :* ${gpname}
 │ *• Name :* ${nama}
-│ *• User tag :* @${user.split('@')[0]}
+│ *• User tag :* @${user.split("@")[0]}
 │ *• Member :* ${member}
 │ *• Join time :* ${moment.tz("Asia/Makassar").format("HH:mm:ss")}
 └───────────────⭓
 > Please make sure to read the group rules and have fun joining.`
-                      : `┌─⭓「 *G O O D B Y E* 」
+                              : `┌─⭓「 *G O O D B Y E* 」
 │ *• Name group :* ${gpname}
 │ *• Name :* ${nama}
-│ *• User tag :* @${user.split('@')[0]}
+│ *• User tag :* @${user.split("@")[0]}
 │ *• Member :* ${member}
 │ *• Leave time :* ${moment.tz("Asia/Jakarta").format("HH:mm:ss")}
 └───────────────⭓
 > Thank You Being Member This Group.`,
-                    subtitle: "",
-                    hasMediaAttachment: true,
-                    ...(await prepareWAMessageMedia({
-                      document: fs.readFileSync('./README.md'),
-                      mimetype: `application/vnd.openxmlformats-officedocument.presentationml.presentation`,
-                      fileName: `Asyl Botz`,
-                      fileLength: `271000000000000`,
-                      pageCount: `100`
-                    }, {
-                      upload: conn.waUploadToServer
-                    }))
-                  }),
-                  gifPlayback: true,
-                  nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
-                    buttons: [
-                      ...(action === "add" ? [
-                        {
-                          name: "quick_reply",
-                          buttonParamsJson: "{\"display_text\":\"Intro\",\"id\":\".introd\"}"
-                        },
-                        {
-                          name: "quick_reply",
-                          buttonParamsJson: "{\"display_text\":\"List Menu\",\"id\":\".menu\"}"
-                        },
-                        {
-                          name: "cta_url",
-                          buttonParamsJson: "{\"display_text\":\"url\",\"url\":\"https://alfisyl.my.id\",\"merchant_url\":\"https://alfisyl.my.id\"}"
-                        }
-                      ] : []),
-                      ...(action === "remove" ? [
-                        {
-                          name: "quick_reply",
-                          buttonParamsJson: "{\"display_text\":\"Outro\",\"id\":\".outrod\"}"
-                        }
-                      ] : [])
-                    ]
-                  })
-                }),
-                contextInfo: { mentionedJid: [user] }
-              }
-            }
-          }, { quoted: fakegc });
+                          subtitle: "",
+                          hasMediaAttachment: true,
+                          ...(await prepareWAMessageMedia(
+                            {
+                              document: fs.readFileSync("./README.md"),
+                              mimetype: `application/vnd.openxmlformats-officedocument.presentationml.presentation`,
+                              fileName: `Asyl Botz`,
+                              fileLength: `1`,
+                              pageCount: `1`,
+                            },
+                            {
+                              upload: conn.waUploadToServer,
+                            }
+                          )),
+                        }),
+                        gifPlayback: true,
+                        nativeFlowMessage:
+                          proto.Message.InteractiveMessage.NativeFlowMessage.create(
+                            {
+                              buttons: [
+                                ...(action === "add"
+                                  ? [
+                                      {
+                                        name: "quick_reply",
+                                        buttonParamsJson:
+                                          '{"display_text":"Intro","id":".intro"}',
+                                      },
+                                      {
+                                        name: "quick_reply",
+                                        buttonParamsJson:
+                                          '{"display_text":"List Menu","id":".menu"}',
+                                      },
+                                      {
+                                        name: "cta_url",
+                                        buttonParamsJson:
+                                          '{"display_text":"url","url":"https://alfisyl.my.id","merchant_url":"https://alfisyl.my.id"}',
+                                      },
+                                    ]
+                                  : []),
+                                ...(action === "remove"
+                                  ? [
+                                      {
+                                        name: "quick_reply",
+                                        buttonParamsJson:
+                                          '{"display_text":"Outro","id":".outrod"}',
+                                      },
+                                    ]
+                                  : []),
+                              ],
+                            }
+                          ),
+                      }
+                    ),
+                    contextInfo: { mentionedJid: [user] },
+                  },
+                },
+              },
+              { quoted: fakegc }
+            );
 
-          await this.relayMessage(msg.key.remoteJid, msg.message, { messageId: msg.key.id });
+            await this.relayMessage(msg.key.remoteJid, msg.message, {
+              messageId: msg.key.id,
+            });
+          }
         }
-      }
-      break;
-
-    case "promote":
-      text = chat.sPromote || this.spromote || conn.spromote || "@user ```is now Admin```";
-    case "demote":
-      if (!text)
-        text = chat.sDemote || this.sdemote || conn.sdemote || "@user ```is no longer Admin```";
-      text = text.replace("@user", "@" + participants[0].split("@")[0]);
-      if (chat.detect) this.sendMessage(id, { text });
-      break;
-  }
-},
+        break;
+      case "promote":
+        text =
+          chat.sPromote ||
+          this.spromote ||
+          conn.spromote ||
+          "@user ```is now Admin```";
+      case "demote":
+        if (!text)
+          text =
+            chat.sDemote ||
+            this.sdemote ||
+            conn.sdemote ||
+            "@user ```is no longer Admin```";
+        text = text.replace("@user", "@" + participants[0].split("@")[0]);
+        if (chat.detect) this.sendMessage(id, { text });
+        break;
+    }
+  },
   async deleteUpdate(message) {
     try {
       const { fromMe, id, participant } = message;
@@ -660,12 +706,12 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
       await this.reply(
         msg.key?.remoteJid || participant || msg.chat,
         `*[ System notice ]* delete message detected !`,
-        fkontak,
+        fkontak
       );
       await this.copyNForward(
         msg.key?.remoteJid || participant || msg.chat,
         msg || null,
-        false,
+        false
       ).catch((e) => console.log(e, msg));
     } catch (e) {
       console.error(e);
@@ -687,83 +733,78 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`, m);
     }
   },
 }),
-global.dfail = async (type, m, conn) => {
-  const messages = {
-    owner: `┌─⭓「 *OWNER ONLY* 」
+  (global.dfail = async (type, m, conn) => {
+    const messages = {
+      owner: `┌─⭓「 *OWNER ONLY* 」
 │ *• Msg :* this feature only for Owner!
 └───────────────⭓`,
-    mods: `┌─⭓「 *MODERATOR ONLY* 」
+      mods: `┌─⭓「 *MODERATOR ONLY* 」
 │ *• Msg :* this feature only for moderator bot!
 └───────────────⭓`,
-    group: `┌─⭓「 *GROUP ONLY* 」
+      group: `┌─⭓「 *GROUP ONLY* 」
 │ *• Msg :* sorry this features only used in Group chat
 └───────────────⭓`,
-    private: `┌─⭓「 *PRIVATE ONLY* 」
+      private: `┌─⭓「 *PRIVATE ONLY* 」
 │ *• Msg :* sorry this features only used in Private chat
 └───────────────⭓`,
-    admin: `┌─⭓「 *ADMIN ONLY* 」
+      admin: `┌─⭓「 *ADMIN ONLY* 」
 │ *• Msg :* this feature only for admin group!
 └───────────────⭓`,
-    botAdmin: `┌─⭓「 *BOT NOT ADMIN* 」
+      botAdmin: `┌─⭓「 *BOT NOT ADMIN* 」
 │ *• Msg :* Promote bot to admin before use this command!
 └───────────────⭓`,
-    block: `┌─⭓「 *BLOCK COMMAND* 」
+      block: `┌─⭓「 *BLOCK COMMAND* 」
 │ *• Msg :* sorry command has been blocked!
 └───────────────⭓`,
-    premium: `┌─⭓「 *PREMIUM ONLY* 」
+      premium: `┌─⭓「 *PREMIUM ONLY* 」
 │ *• Msg :* this feature only for premium bot!
-└───────────────⭓`
-  };
+└───────────────⭓`,
+    };
 
-  // Handle tombol Daftar (unreg)
-  if (type === 'unreg') {
-    return await conn.sendButton(
-      m.chat,
-      [["Otomatis Daftar", `.verify`]],
-      m,
-      {
-        body: `┌─⭓「 *REGISTER BEFORE USING BOT* 」
+    // Handle tombol Daftar (unreg)
+    if (type === "unreg") {
+      return await conn.sendButton(
+        m.chat,
+        [["Otomatis Daftar", `.verify`]],
+        m,
+        {
+          body: `┌─⭓「 *REGISTER BEFORE USING BOT* 」
 │ • Tekan tombol *Daftar* di bawah atau ketik: .daftar nama.umur
-└───────────────⭓`
-      }
-    );
-  }
+└───────────────⭓`,
+        }
+      );
+    }
 
-  // Handle tombol Unregister
-  if (type === 'unregister') {
-    return await conn.sendButton(
-      m.chat,
-      [["Unregister", `.unreg`]],
-      m,
-      {
+    // Handle tombol Unregister
+    if (type === "unregister") {
+      return await conn.sendButton(m.chat, [["Unregister", `.unreg`]], m, {
         body: `┌─⭓「 *UNREGISTER BOT* 」
 │ • Tekan tombol *Unregister* di bawah untuk keluar dari database.
-└───────────────⭓`
-      }
-    );
-  }
+└───────────────⭓`,
+      });
+    }
 
-  // Default error message (externalAdReply)
-  if (messages[type]) {
-    return conn.sendMessage(
-      m.chat,
-      {
-        text: messages[type],
-        contextInfo: {
-          externalAdReply: {
-            title: "Access Denied !",
-            body: global.wm,
-            thumbnailUrl: "https://files.catbox.moe/sj3xz0.jpg",
-            sourceUrl: null,
-            mediaType: 0,
-            renderLargerThumbnail: false
-          }
-        }
-      },
-      { quoted: m }
-    );
-  }
-};
+    // Default error message (externalAdReply)
+    if (messages[type]) {
+      return conn.sendMessage(
+        m.chat,
+        {
+          text: messages[type],
+          contextInfo: {
+            externalAdReply: {
+              title: "Access Denied !",
+              body: global.wm,
+              thumbnailUrl: "https://files.catbox.moe/sj3xz0.jpg",
+              sourceUrl: null,
+              mediaType: 0,
+              renderLargerThumbnail: false,
+            },
+          },
+        },
+        { quoted: m }
+      );
+    }
+  });
 
 let file = require.resolve(__filename);
 fs.watchFile(file, () => {

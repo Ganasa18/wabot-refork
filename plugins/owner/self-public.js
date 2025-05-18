@@ -12,7 +12,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 handler.help = ["self", "public"].map((a) => a + " *[options]*");
 handler.tags = ["owner"];
 handler.command = ["self", "public"];
+handler.rowner = true;
 handler.owner = true;
 
 module.exports = handler;
-  

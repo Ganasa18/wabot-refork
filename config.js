@@ -2,18 +2,18 @@ let { Scraper, Uploader } = require("akiraa-scrape");
 const moment = require("moment-timezone");
 
 /*--------[ OWNER SETTING ]------------*/
-global.owner = [""];
-global.mods = [""]; // Moderator
+global.owner = ["6285171590898", "6283122808260"];
+global.mods = [""];
 global.prems = [""]; // Premium
-global.numberbot = "";
-global.nameowner = "@Asyl";
-global.nomorown = "";
+global.numberbot = "6283122808260";
+global.nameowner = "©Fuzan";
+global.nomorown = "6283122808260";
 
 /*--------[ BOT SETTING ]------------*/
-global.namebot = "Asyl-Bot";
-global.swa = "wa.me/";
+global.namebot = "Fuzan-Bot";
+global.swa = "wa.me/6283122808260";
 global.version = "1.0.0";
-global.wm = "© Asyl";
+global.wm = "©Fuzan";
 global.isPairing = true;
 global.wait = "*( Loading )* Plase Wait...";
 global.eror = "*Error System*";
@@ -85,7 +85,7 @@ END:VCARD`,
 };
 
 /*=====[ NEWWESTLATER SETTINGS]==========*/
-global.textsaluran = "Powered By Asyl ♻️";
+global.textsaluran = "Powered By Fuzan ♻️";
 global.saluran = "120363380343761245@newsletter";
 
 global.capitalize = (str) => {

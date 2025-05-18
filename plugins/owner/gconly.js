@@ -11,6 +11,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 handler.help = ["gconly"].map((a) => a + " *[gconly mode]*");
 handler.tags = ["owner"];
 handler.command = ["gconly"];
+handler.rowner = true;
 handler.owner = true;
 
 module.exports = handler;

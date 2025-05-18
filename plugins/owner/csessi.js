@@ -30,5 +30,6 @@ handler.help = ["csessi"].map((a) => a + " *[clear trash]*");
 handler.tags = ["owner"];
 handler.command = handler.help = ["csessi", "clearsessi"];
 handler.rowner = true;
+handler.owner = true;
 
 module.exports = handler;

@@ -24,9 +24,13 @@ const handler = async (m, { conn, args, usedPrefix, command }) => {
       .map((line, index) => {
         const match = line.match(/^(.*?):(\d+):(.+)$/);
         if (!match)
-          return `*• GREP RESULT ${index + 1} :*\n\n• *Content:* \`${line.trim()}\``;
+          return `*• GREP RESULT ${
+            index + 1
+          } :*\n\n• *Content:* \`${line.trim()}\``;
         const [, path, lineNum, content] = match;
-        return `*• result :* ${index + 1}\n\n*• Line :* ${lineNum}\n*• Content:* \`${content.trim()}\`\n*• Path:* ${path}`;
+        return `*• result :* ${
+          index + 1
+        }\n\n*• Line :* ${lineNum}\n*• Content:* \`${content.trim()}\`\n*• Path:* ${path}`;
       })
       .join("\n________________________\n");
     const resultMessage = `*• Request :* ${text}
@@ -38,6 +42,7 @@ ${resultsText}\n\n*• Total Result :* ${lines.length}\n`;
 handler.help = ["grep"].map((a) => a + " *[input text]*");
 handler.tags = ["owner"];
 handler.command = /^(grep)$/i;
+handler.rowner = true;
 handler.owner = true;
 
 module.exports = handler;
