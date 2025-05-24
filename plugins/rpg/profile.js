@@ -117,7 +117,7 @@ let handler = async (m, { conn, command }) => {
     let isPremium = user.premium ? "Premium" : "Free User";
     let isVip = user.vip ? "Yes" : "Free User";
     let premiumExpired = user.premium
-      ? new Date(user.premiumDate).toDateString()
+      ? msToDateFormat(user.premiumDate - new Date() * 1)
       : "Not Found";
     let vipExpired = user.vip
       ? new Date(user.vipDate).toDateString()
@@ -187,4 +187,17 @@ function formatRupiah(number) {
   });
 
   return formatter.format(number);
+}
+
+function msToDateFormat(ms) {
+  temp = ms;
+  days = Math.floor(ms / (24 * 60 * 60 * 1000));
+  daysms = ms % (24 * 60 * 60 * 1000);
+  hours = Math.floor(daysms / (60 * 60 * 1000));
+  hoursms = ms % (60 * 60 * 1000);
+  minutes = Math.floor(hoursms / (60 * 1000));
+  minutesms = ms % (60 * 1000);
+  sec = Math.floor(minutesms / 1000);
+  return days + " Hari " + hours + " Jam " + minutes + " Menit";
+  // +minutes+":"+sec;
 }
