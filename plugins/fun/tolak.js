@@ -9,7 +9,7 @@ let handler = async (m, { conn, text }) => {
     const n = String(num),
       p = n.indexOf(".");
     return n.replace(/\d(?=(?:\d{3})+(?:\.|$))/g, (m, i) =>
-      p < 0 || i < p ? `${m},` : m,
+      p < 0 || i < p ? `${m},` : m
     );
   };
 
@@ -17,7 +17,7 @@ let handler = async (m, { conn, text }) => {
     return conn.reply(
       m.chat,
       `*Berikan nomor, tag atau reply chat target.*`,
-      m,
+      m
     );
   // let exists = await conn.isOnWhatsApp(number)
   // if (exists) return conn.reply(m.chat, `*Nomor target tidak terdaftar di WhatsApp*`, m)
@@ -40,13 +40,13 @@ let handler = async (m, { conn, text }) => {
       return conn.reply(
         m.chat,
         `*Target atau Nomor tidak ditemukan, mungkin sudah keluar atau bukan anggota grup ini.*`,
-        m,
+        m
       );
     if (user === m.sender)
       return conn.reply(
         m.chat,
         `*Tidak bisa berpacaran dengan diri sendiri.*`,
-        m,
+        m
       );
     if (user === conn.user.jid)
       return conn.reply(m.chat, `*Tidak bisa berpacaran dengan bot.*`, m);
@@ -60,7 +60,7 @@ let handler = async (m, { conn, text }) => {
           contextInfo: {
             mentionedJid: [user],
           },
-        },
+        }
       );
     } else {
       global.db.data.users[user].pasangan = "";
@@ -72,7 +72,7 @@ let handler = async (m, { conn, text }) => {
           contextInfo: {
             mentionedJid: [user],
           },
-        },
+        }
       );
     }
   }
@@ -80,7 +80,7 @@ let handler = async (m, { conn, text }) => {
 handler.help = ["tolak *@tag*"];
 handler.tags = ["fun"];
 handler.command = /^(tolak)$/i;
-handler.mods = false;
+handler.moderator = false;
 handler.premium = false;
 handler.group = true;
 handler.limit = true;

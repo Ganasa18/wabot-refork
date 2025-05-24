@@ -411,8 +411,8 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`,
             fail("owner", m, this);
             continue;
           }
-          if (plugin.mods && !isMods) {
-            fail("mods", m, this);
+          if (plugin.moderator && !isMods) {
+            fail("moderator", m, this);
             continue;
           }
           if (plugin.premium && !isPrems) {
@@ -849,7 +849,7 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`,
       owner: `┌─⭓「 *OWNER ONLY* 」
 │ *• Msg :* this feature only for Owner!
 └───────────────⭓`,
-      mods: `┌─⭓「 *MODERATOR ONLY* 」
+      moderator: `┌─⭓「 *MODERATOR ONLY* 」
 │ *• Msg :* this feature only for moderator bot!
 └───────────────⭓`,
       group: `┌─⭓「 *GROUP ONLY* 」

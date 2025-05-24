@@ -410,12 +410,12 @@ function filterMenuByAccess(menuItems, conn, m) {
 
     // Premium user dapat mengakses premium dan non-restricted
     if (isPrems) {
-      if (plugin.owner || plugin.mods) return false;
+      if (plugin.owner || plugin.moderator) return false;
       return true;
     }
 
     // Pengguna biasa - hanya bisa akses non-restricted
-    if (plugin.premium || plugin.mods || plugin.owner) return false;
+    if (plugin.premium || plugin.moderator || plugin.owner) return false;
 
     // Lolos semua filter
     return true;
@@ -580,7 +580,7 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
         limit: plugin.limit,
         premium: plugin.premium,
         enabled: !plugin.disabled,
-        mods: plugin.mods,
+        moderator: plugin.moderator,
         owner: plugin.owner,
       }));
 
