@@ -53,12 +53,12 @@ const applyTextStyle = (text, style = 1) => {
 // Default menu template
 const defaultMenu = {
   before: `
-  ╭━━━━━━━ INFO ━━━━━━━╮
+╭━━━━━━━ INFO ━━━━━━╮
 ┃ 👤 User: %name
 ┃ 📆 Date: %date
 ┃ ⏰ Time: %time
 ┃ ⏱️ Uptime: %uptime
-╰━━━━━━━━━━━━━━━━━━╯`,
+╰━━━━━━━━━━━━━━━━━━━╯`,
 
   header: `–  *%category* \n┌  `,
   body: `│  ◦ %cmd`,
