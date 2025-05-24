@@ -7,11 +7,11 @@ let handler = async (m, { conn, command, usedPrefix }) => {
     conn.reply(
       m.chat,
       "You Already have question to answer !",
-      conn.tebakgame[id][0],
+      conn.tebakgame[id][0]
     );
   }
   let res = await fetch(
-    `https://raw.githubusercontent.com/qisyana/scrape/main/tebakgame.json`,
+    `https://raw.githubusercontent.com/qisyana/scrape/main/tebakgame.json`
   );
   let src = await res.json();
   let Apps = src[Math.floor(Math.random() * src.length)];
@@ -37,7 +37,7 @@ You lose with reason : *[ Timeout ]*
 
 • Answer : *[ ${json.jawaban} ]*`,
           },
-          { quoted: m },
+          { quoted: m }
         );
       delete conn.tebakgame[id];
     }, timeout),
@@ -65,7 +65,7 @@ You lose with reason : *[ ${m.text} ]*
 
 • Answer : *[ ${json.jawaban} ]*`,
       },
-      { quoted: await conn.tebakgame[id][0] },
+      { quoted: await conn.tebakgame[id][0] }
     );
     delete conn.tebakgame[id];
   } else if (m.text.toLowerCase() === json.jawaban.toLowerCase()) {
@@ -83,7 +83,7 @@ you have successfully guessed the answer!
 
 Next question...`,
       },
-      { quoted: await conn.tebakgame[id][0] },
+      { quoted: await conn.tebakgame[id][0] }
     );
     delete conn.tebakgame[id];
     await conn.appendTextMessage(m, ".tebakgame", m.chatUpdate);
@@ -101,5 +101,5 @@ handler.help = ["tebakgame"];
 handler.tags = ["game"];
 handler.command = ["tebakgame"];
 handler.group = true;
-
+handler.register = true;
 module.exports = handler;

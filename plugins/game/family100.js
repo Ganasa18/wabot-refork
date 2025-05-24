@@ -78,5 +78,6 @@ handler.help = ["family100"];
 handler.tags = ["game"];
 handler.command = /^family100$/i;
 handler.group = true;
+handler.register = true;
 
 module.exports = handler;

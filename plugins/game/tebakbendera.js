@@ -6,12 +6,12 @@ let handler = async (m, { conn, command, usedPrefix }) => {
     conn.reply(
       m.chat,
       "Masih ada soal belum terjawab di chat ini",
-      conn.tebakbendera[id].reply,
+      conn.tebakbendera[id].reply
     );
     throw false;
   }
   let res = await fetch(
-    `https://raw.githubusercontent.com/qisyana/scrape/main/flag.json`,
+    `https://raw.githubusercontent.com/qisyana/scrape/main/flag.json`
   );
   let src = await res.json();
   let Apps = src[Math.floor(Math.random() * src.length)];
@@ -23,7 +23,7 @@ let handler = async (m, { conn, command, usedPrefix }) => {
   let q = await conn.sendMessage(
     m.chat,
     { image: { url: json.img }, caption: caption },
-    { quoted: m },
+    { quoted: m }
   );
   conn.tebakbendera[id] = {
     reply: q,
@@ -34,7 +34,7 @@ let handler = async (m, { conn, command, usedPrefix }) => {
       conn.reply(
         m.chat,
         `*</> T I M E O U T </>*\n*• Jawaban :* ${json.name}`,
-        q,
+        q
       );
       delete conn.tebakbendera[id];
     }
@@ -66,5 +66,5 @@ handler.help = ["tebakbendera"];
 handler.tags = ["game"];
 handler.command = /^tebakbendera/i;
 handler.group = false;
-
+handler.register = true;
 module.exports = handler;

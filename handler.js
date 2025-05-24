@@ -165,7 +165,7 @@ global.processing = new Set();
         conn.decodeJid(global.conn.user.id),
         ...global.owner.map((a) => a + "@s.whatsapp.net"),
       ].includes(m.sender);
-      const isOwner = isROwner || m.fromMe;
+      const isOwner = isROwner;
       const isMods = global.db.data.users[m.sender].moderator;
       const isPrems = global.db.data.users[m.sender].premium;
       const isBans = global.db.data.users[m.sender].banned;
@@ -211,7 +211,7 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`,
         db.data.users[m.sender].limit = "PERMANENT";
         db.data.users[m.sender].moderator = true;
       } else if (isPrems) {
-        db.data.users[m.sender].limit = 30;
+        // db.data.users[m.sender].limit = 30;
       } else if (!isROwner && isBans) return;
 
       if (opts["queque"] && m.text && !(isMods || isPrems)) {

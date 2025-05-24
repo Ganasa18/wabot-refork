@@ -105,7 +105,8 @@ handler.command = ["song", "lagu", "play"];
 
 handler.exp = 0;
 handler.register = true;
-handler.premium = true;
+// handler.premium = true;
+handler.moderator = true;
 handler.limit = true;
 
 module.exports = handler;

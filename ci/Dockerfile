@@ -12,7 +12,7 @@ RUN if command -v apt-get >/dev/null 2>&1; then \
   fi
 
 # Install dependencies only for building the app
-COPY package.json package-lock.json ./
+COPY package.json ./
 
 # Verbose installation with multiple fallback methods
 RUN echo "Attempting npm installation..." && \
@@ -44,7 +44,7 @@ RUN if command -v apt-get >/dev/null 2>&1; then \
 # Copy only necessary files from the builder stage
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/package-lock.json ./package-lock.json
+
 
 # Copy application code
 # If you have a build directory, adjust this accordingly

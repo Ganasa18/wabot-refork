@@ -1302,5 +1302,5 @@ handler.tags = ["game"];
 handler.help = ["mpoker"];
 handler.command = /^(mpoker)$/i;
 handler.group = true;
-
+handler.register = true;
 module.exports = handler;

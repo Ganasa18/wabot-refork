@@ -7,14 +7,14 @@ let handler = async (m, { conn, command, usedPrefix }) => {
     conn.reply(
       m.chat,
       "You Already have question to answer !",
-      conn.tebaklagu[id][0],
+      conn.tebaklagu[id][0]
     );
   }
   let res = await fetch(
-    `https://raw.githubusercontent.com/qisyana/scrape/main/tebaklagu.json`,
+    `https://raw.githubusercontent.com/qisyana/scrape/main/tebaklagu.json`
   );
   let src = await res.json();
-  let Apps = src[Math.floor(Math.random() * src.length)]
+  let Apps = src[Math.floor(Math.random() * src.length)];
   let json = Apps;
   let caption = `*[ TEBAK LAGU ]*
 *• Timeout :* 60 seconds
@@ -23,7 +23,7 @@ let handler = async (m, { conn, command, usedPrefix }) => {
 
 Reply to this message to answer the question
 Type *\`nyerah\`* to surrender`.trim();
-let q = await conn.reply(m.chat, caption, m)
+  let q = await conn.reply(m.chat, caption, m);
   conn.tebaklagu[id] = [
     conn.sendFile(m.chat, json.lagu, null, caption, q),
     json,
@@ -37,7 +37,7 @@ You lose with reason : *[ Timeout ]*
 
 • Answer : *[ ${json.judul} ]*`,
           },
-          { quoted: m },
+          { quoted: m }
         );
       delete conn.tebaklagu[id];
     }, timeout),
@@ -65,7 +65,7 @@ You lose with reason : *[ ${m.text} ]*
 
 • Answer : *[ ${json.judul} ]*`,
       },
-      { quoted: await conn.tebaklagu[id][0] },
+      { quoted: await conn.tebaklagu[id][0] }
     );
     delete conn.tebaklagu[id];
   } else if (m.text.toLowerCase() === json.judul.toLowerCase()) {
@@ -83,7 +83,7 @@ you have successfully guessed the answer!
 
 Next question...`,
       },
-      { quoted: await conn.tebaklagu[id][0] },
+      { quoted: await conn.tebaklagu[id][0] }
     );
     delete conn.tebaklagu[id];
     await conn.appendTextMessage(m, ".tebaklagu", m.chatUpdate);
@@ -101,6 +101,5 @@ handler.help = ["tebaklagu"];
 handler.tags = ["game"];
 handler.command = ["tebaklagu"];
 handler.group = true;
-
+handler.register = true;
 module.exports = handler;
-

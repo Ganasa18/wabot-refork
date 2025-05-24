@@ -9,7 +9,7 @@ let handler = async (m, { conn, command, usedPrefix }) => {
     conn.reply(
       m.chat,
       "You Already have question to answer !",
-      conn.tebakkata[id][0],
+      conn.tebakkata[id][0]
     );
   }
   let json = await tebakkata();
@@ -34,7 +34,7 @@ You lose with reason : *[ Timeout ]*
 
 • Answer : *[ ${json.jawaban} ]*`,
           },
-          { quoted: m },
+          { quoted: m }
         );
       delete conn.tebakkata[id];
     }, timeout),
@@ -62,7 +62,7 @@ You lose with reason : *[ ${m.text} ]*
 
 • Answer : *[ ${json.jawaban} ]*`,
       },
-      { quoted: await conn.tebakkata[id][0] },
+      { quoted: await conn.tebakkata[id][0] }
     );
     delete conn.tebakkata[id];
   } else if (m.text.toLowerCase() === json.jawaban.toLowerCase()) {
@@ -80,7 +80,7 @@ you have successfully guessed the answer!
 
 Next question...`,
       },
-      { quoted: await conn.tebakkata[id][0] },
+      { quoted: await conn.tebakkata[id][0] }
     );
     delete conn.tebakkata[id];
     await conn.appendTextMessage(m, ".tebakkata", m.chatUpdate);
@@ -98,5 +98,5 @@ handler.help = ["tebakkata"];
 handler.tags = ["game"];
 handler.command = ["tebakkata"];
 handler.group = true;
-
+handler.register = true;
 module.exports = handler;

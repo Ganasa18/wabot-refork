@@ -11,10 +11,11 @@ let handler = async (m, { conn, text, usedPrefix }) => {
   if (typeof db.data.users[hl] == "undefined")
     return conn.reply(m.chat, "🚩 Pengguna tidak ada didalam database", m);
 
-  if (!global.db.data.users[hl].mod)
+  if (!global.db.data.users[hl].moderator)
     return conn.reply(m.chat, "🚩 User ini bukan moderator!", m);
 
-  global.db.data.users[hl].mod = false;
+  global.db.data.users[hl].moderator = false;
+  global.db.data.users[hl].limit = 30;
 
   conn.reply(
     m.chat,
@@ -40,9 +41,9 @@ let handler = async (m, { conn, text, usedPrefix }) => {
   );
 };
 
-handler.help = ["removemods *<@tag>*"];
+handler.help = ["delmods *<@tag>*"];
 handler.tags = ["owner"];
-handler.command = /^(removemods|delmods|rmmods)$/i;
+handler.command = /^(delmods|rmmods)$/i;
 handler.Puki = true;
 handler.fail = null;
 handler.rowner = true;

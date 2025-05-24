@@ -7,11 +7,11 @@ let handler = async (m, { conn, command, usedPrefix }) => {
     conn.reply(
       m.chat,
       "You Already have question to answer !",
-      conn.tebaklirik[id][0],
+      conn.tebaklirik[id][0]
     );
   }
   let res = await fetch(
-    "https://raw.githubusercontent.com/BochilTeam/database/master/games/tebaklirik.json",
+    "https://raw.githubusercontent.com/BochilTeam/database/master/games/tebaklirik.json"
   );
   let data = await res.json();
   let json = data[Math.floor(Math.random() * data.length)];
@@ -36,7 +36,7 @@ You lose with reason : *[ Timeout ]*
 
 • Answer : *[ ${json.jawaban} ]*`,
           },
-          { quoted: m },
+          { quoted: m }
         );
       delete conn.tebaklirik[id];
     }, timeout),
@@ -64,7 +64,7 @@ You lose with reason : *[ ${m.text} ]*
 
 • Answer : *[ ${json.jawaban} ]*`,
       },
-      { quoted: await conn.tebaklirik[id][0] },
+      { quoted: await conn.tebaklirik[id][0] }
     );
     delete conn.tebaklirik[id];
   } else if (m.text.toLowerCase() === json.jawaban.toLowerCase()) {
@@ -82,7 +82,7 @@ you have successfully guessed the answer!
 
 Next question...`,
       },
-      { quoted: await conn.tebaklirik[id][0] },
+      { quoted: await conn.tebaklirik[id][0] }
     );
     delete conn.tebaklirik[id];
     await conn.appendTextMessage(m, ".tebaklirik", m.chatUpdate);
@@ -100,5 +100,5 @@ handler.help = ["tebaklirik"];
 handler.tags = ["game"];
 handler.command = ["tebaklirik"];
 handler.group = true;
-
+handler.register = true;
 module.exports = handler;

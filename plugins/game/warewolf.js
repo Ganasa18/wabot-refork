@@ -870,5 +870,6 @@ handler.help = ["ww <perintah>"];
 handler.tags = ["game"];
 handler.command = /^(werewolf|ww|vote)$/i;
 handler.group = false;
+handler.register = true;
 
 module.exports = handler;

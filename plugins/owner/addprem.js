@@ -7,12 +7,24 @@ let handler = async (m, { conn, text, usedPrefix }) => {
   function no(number) {
     return number.replace(/\s/g, "").replace(/([@+-])/g, "");
   }
+  const isROwner = [
+    conn.decodeJid(global.conn.user.id),
+    ...global.owner.map((a) => a + "@s.whatsapp.net"),
+  ].includes(m.sender);
+  const isOwner = isROwner;
+
+  if (isOwner) {
+    return conn.reply(m.chat, `Owners sudah otomatis premium`, m);
+  }
 
   var hl = [];
   hl[0] = text.split("|")[0];
   hl[0] = no(hl[0]) + "@s.whatsapp.net";
   hl[1] = text.split("|")[1];
 
+  if (hl[1] == undefined) {
+    return conn.reply(m.chat, `• *Example :* .addprem 628816609112|100`, m);
+  }
   if (!text)
     return conn.reply(m.chat, `• *Example :* .addprem 628816609112|100`, m);
   if (typeof db.data.users[hl[0]] == "undefined")

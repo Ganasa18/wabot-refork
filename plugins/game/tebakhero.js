@@ -6,11 +6,11 @@ let handler = async (m, { conn, command, usedPrefix }) => {
     conn.reply(
       m.chat,
       "You Already have question to answer !",
-      conn.tebakhero[id][0],
+      conn.tebakhero[id][0]
     );
   }
-  let json = await tebakhero("id")
-  if (!json.voice) return
+  let json = await tebakhero("id");
+  if (!json.voice) return;
   let caption = `*[ TEBAK HEROML ]*
 *• Timeout :* 60 seconds
 *• Question :* Guess the ML Hero based on his character's voice
@@ -18,7 +18,7 @@ let handler = async (m, { conn, command, usedPrefix }) => {
 
 Reply to this message to answer the question
 Type *\`nyerah\`* to surrender`.trim();
-let q = await conn.reply(m.chat, caption, m)
+  let q = await conn.reply(m.chat, caption, m);
   conn.tebakhero[id] = [
     conn.sendFile(m.chat, json.voice, "ml.mp3", caption, q),
     json,
@@ -32,7 +32,7 @@ You lose with reason : *[ Timeout ]*
 
 • Answer : *[ ${json.hero} ]*`,
           },
-          { quoted: m },
+          { quoted: m }
         );
       delete conn.tebakhero[id];
     }, timeout),
@@ -60,7 +60,7 @@ You lose with reason : *[ ${m.text} ]*
 
 • Answer : *[ ${json.hero} ]*`,
       },
-      { quoted: await conn.tebakhero[id][0] },
+      { quoted: await conn.tebakhero[id][0] }
     );
     delete conn.tebakhero[id];
   } else if (m.text.toLowerCase() === json.hero.toLowerCase()) {
@@ -78,7 +78,7 @@ you have successfully guessed the answer!
 
 Next question...`,
       },
-      { quoted: await conn.tebakhero[id][0] },
+      { quoted: await conn.tebakhero[id][0] }
     );
     delete conn.tebakhero[id];
     await conn.appendTextMessage(m, ".tebakhero", m.chatUpdate);
@@ -96,33 +96,174 @@ handler.help = ["tebakhero"];
 handler.tags = ["game"];
 handler.command = ["tebakhero"];
 handler.group = true;
-
+handler.register = true;
 module.exports = handler;
 
 async function tebakhero(tema = "id") {
-try {
-     let karakter = ["Aamon", "Assassin", "Jungler", "Akai", "Tank", "Aldous", "Fighter", "Alice", "Alpha", "Alucard", "Angela", "Support", "Roamer", "Argus", "EXP Laner", "Arlott", "Atlas", "Aulus", "Aurora", "Mage", "Badang", "Balmond", "Bane", "Barats", "Baxia", "Beatrix", "Marksman", "Gold Laner", "Belerick", "Benedetta", "Brody", "Bruno", "Carmilla", "Caecilion", "Mid Laner", "Chou", "Figter", "Cici", "Claude", "Clint", "Cyclops", "Diggie", "Dyrroth", "Edith", "Esmeralda", "Estes", "Eudora", "Fanny", "Faramis", "Floryn", "Franco", "Fredrinn", "Freya", "Gatotkaca", "Gloo", "Gord", "Granger", "Grock", "Guinevere", "Gusion", "Hanabi", "Hanzo", "Harith", "Harley", "Hayabusa", "Helcurt", "Hilda", "Hylos", "Irithel", "Ixia", "Jawhead", "Johnson", "Joy", "Asassin", "Julian", "Kadita", "Kagura", "Kaja", "Karina", "Karrie", "Khaleed", "Khufra", "Kimmy", "Lancelot", "Layla", "Leomord", "Lesley", "Ling", "Lolita", "Lunox", "Luo Yi", "Lylia", "Martis", "Masha", "Mathilda", "Melissa", "Minotaur", "Minsitthar", "Miya", "Moskov", "Nana", "Natalia", "Natan", "Novaria", "Odette", "Paquito", "Pharsa", "Phoveus", "Popol and Kupa", "Rafaela", "Roger", "Ruby", "Saber", "Selena", "Silvanna", "Sun", "Terizla", "Thamuz", "Tigreal", "Uranus", "Vale", "Valentina", "Valir", "Vexana", "Wanwan", "Xavier", "Yin", "Yu Zhong", "Yve", "Zhask", "Zilong"];
-   let chara = karakter[Math.floor(Math.random() * karakter.length)]
-    const url = tema === "id" ? `https://mobile-legends.fandom.com/wiki/${chara.toLowerCase()}/Audio/id` : tema === "en" ? `https://mobilelegendsbuild.com/sitemap.xml` : null;
+  try {
+    let karakter = [
+      "Aamon",
+      "Assassin",
+      "Jungler",
+      "Akai",
+      "Tank",
+      "Aldous",
+      "Fighter",
+      "Alice",
+      "Alpha",
+      "Alucard",
+      "Angela",
+      "Support",
+      "Roamer",
+      "Argus",
+      "EXP Laner",
+      "Arlott",
+      "Atlas",
+      "Aulus",
+      "Aurora",
+      "Mage",
+      "Badang",
+      "Balmond",
+      "Bane",
+      "Barats",
+      "Baxia",
+      "Beatrix",
+      "Marksman",
+      "Gold Laner",
+      "Belerick",
+      "Benedetta",
+      "Brody",
+      "Bruno",
+      "Carmilla",
+      "Caecilion",
+      "Mid Laner",
+      "Chou",
+      "Figter",
+      "Cici",
+      "Claude",
+      "Clint",
+      "Cyclops",
+      "Diggie",
+      "Dyrroth",
+      "Edith",
+      "Esmeralda",
+      "Estes",
+      "Eudora",
+      "Fanny",
+      "Faramis",
+      "Floryn",
+      "Franco",
+      "Fredrinn",
+      "Freya",
+      "Gatotkaca",
+      "Gloo",
+      "Gord",
+      "Granger",
+      "Grock",
+      "Guinevere",
+      "Gusion",
+      "Hanabi",
+      "Hanzo",
+      "Harith",
+      "Harley",
+      "Hayabusa",
+      "Helcurt",
+      "Hilda",
+      "Hylos",
+      "Irithel",
+      "Ixia",
+      "Jawhead",
+      "Johnson",
+      "Joy",
+      "Asassin",
+      "Julian",
+      "Kadita",
+      "Kagura",
+      "Kaja",
+      "Karina",
+      "Karrie",
+      "Khaleed",
+      "Khufra",
+      "Kimmy",
+      "Lancelot",
+      "Layla",
+      "Leomord",
+      "Lesley",
+      "Ling",
+      "Lolita",
+      "Lunox",
+      "Luo Yi",
+      "Lylia",
+      "Martis",
+      "Masha",
+      "Mathilda",
+      "Melissa",
+      "Minotaur",
+      "Minsitthar",
+      "Miya",
+      "Moskov",
+      "Nana",
+      "Natalia",
+      "Natan",
+      "Novaria",
+      "Odette",
+      "Paquito",
+      "Pharsa",
+      "Phoveus",
+      "Popol and Kupa",
+      "Rafaela",
+      "Roger",
+      "Ruby",
+      "Saber",
+      "Selena",
+      "Silvanna",
+      "Sun",
+      "Terizla",
+      "Thamuz",
+      "Tigreal",
+      "Uranus",
+      "Vale",
+      "Valentina",
+      "Valir",
+      "Vexana",
+      "Wanwan",
+      "Xavier",
+      "Yin",
+      "Yu Zhong",
+      "Yve",
+      "Zhask",
+      "Zilong",
+    ];
+    let chara = karakter[Math.floor(Math.random() * karakter.length)];
+    const url =
+      tema === "id"
+        ? `https://mobile-legends.fandom.com/wiki/${chara.toLowerCase()}/Audio/id`
+        : tema === "en"
+        ? `https://mobilelegendsbuild.com/sitemap.xml`
+        : null;
     if (!url) throw new Error("Tema tidak valid");
     let res = await fetch(url);
     let data = await res.text();
     if (tema === "en") {
       const result = await parseStringPromise(data);
-      const targetUrl = result.urlset.url.filter(url => url.loc[0].includes("sound/" + chara.toLowerCase())).map(url => url.loc[0])[0];
+      const targetUrl = result.urlset.url
+        .filter((url) => url.loc[0].includes("sound/" + chara.toLowerCase()))
+        .map((url) => url.loc[0])[0];
       if (!targetUrl) return [];
       res = await fetch(targetUrl);
       data = await res.text();
     }
     const $ = cheerio.load(data);
-    let audio = $("audio").map((i, el) => $(el).attr("src")).get();
-   let audio_random = audio[Math.floor(Math.random() * audio.length)]
-   if (!audio_random) await tebakhero()
- return {
-  hero: chara,
-  voice: audio_random || audio
-   }
+    let audio = $("audio")
+      .map((i, el) => $(el).attr("src"))
+      .get();
+    let audio_random = audio[Math.floor(Math.random() * audio.length)];
+    if (!audio_random) await tebakhero();
+    return {
+      hero: chara,
+      voice: audio_random || audio,
+    };
   } catch (error) {
-    return error
+    return error;
   }
 }
