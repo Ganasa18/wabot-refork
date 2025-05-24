@@ -211,7 +211,7 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`,
         db.data.users[m.sender].limit = "PERMANENT";
         db.data.users[m.sender].moderator = true;
       } else if (isPrems) {
-        db.data.users[m.sender].limit = "PERMANENT";
+        db.data.users[m.sender].limit = 30;
       } else if (!isROwner && isBans) return;
 
       if (opts["queque"] && m.text && !(isMods || isPrems)) {
