@@ -2,16 +2,16 @@ let { Scraper, Uploader } = require("akiraa-scrape");
 const moment = require("moment-timezone");
 
 /*--------[ OWNER SETTING ]------------*/
-global.owner = ["6285171590898", "6283122808260"];
+global.owner = [""];
 global.mods = [""];
 global.prems = [""]; // Premium
-global.numberbot = "6283122808260";
+global.numberbot = "";
 global.nameowner = "©Fuzan";
-global.nomorown = "6283122808260";
+global.nomorown = "";
 
 /*--------[ BOT SETTING ]------------*/
 global.namebot = "Fuzan-Bot";
-global.swa = "wa.me/6283122808260";
+global.swa = "wa.me/";
 global.version = "1.0.0";
 global.wm = "©Fuzan";
 global.isPairing = true;
