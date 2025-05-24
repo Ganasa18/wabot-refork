@@ -8,7 +8,6 @@
     makeCacheableSignalKeyStore,
     DisconnectReason,
     fetchLatestBaileysVersion,
-    PHONENUMBER_MCC,
     Browsers,
     proto,
     jidNormalizedUser,

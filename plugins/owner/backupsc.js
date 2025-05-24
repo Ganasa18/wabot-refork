@@ -9,10 +9,10 @@ const { promisify } = require("util");
 const exec_ = promisify(exec);
 
 const handler = async (m, { conn }) => {
-  if (m.chat === "120363217994871358@g.us") {
+  if (m.chat === "120363419617912730@g.us") {
     // Ensure this comparison is strict
     try {
-      const zipFileName = `Asyl.zip`;
+      const zipFileName = `fuzan.zip`;
 
       m.reply("Sedang memulai proses backup. Harap tunggu...");
 

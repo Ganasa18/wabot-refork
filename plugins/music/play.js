@@ -104,8 +104,8 @@ handler.tags = ["music"];
 handler.command = ["song", "lagu", "play"];
 
 handler.exp = 0;
-handler.register = false;
-handler.owner = true;
+handler.register = true;
+handler.premium = true;
 handler.limit = true;
 
 module.exports = handler;

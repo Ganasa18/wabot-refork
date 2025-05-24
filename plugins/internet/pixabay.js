@@ -2,6 +2,7 @@ module.exports = {
   help: ["pixabay"].map((a) => a + " *[type query]*"),
   tags: ["internet"],
   command: ["pixabay"],
+  premium: true,
   code: async (
     m,
     {
@@ -14,7 +15,7 @@ module.exports = {
       isBotAdmin,
       isPrems,
       chatUpdate,
-    },
+    }
   ) => {
     if (!text)
       throw `*• Example :* ${usedPrefix + command} *[type query]*
@@ -28,7 +29,7 @@ List Type :
       if (!data) throw `*• Example :* ${usedPrefix + command} *[query]*`;
       let res = await Func.fetchJson(
         "https://pixabay.com/api/?key=30089426-4575ed7bbbc8bfffe9a0b8eb4&q=" +
-          data,
+          data
       );
       let rand = await Func.random(res.hits);
       let cap = `*± P I X - A B A Y*
@@ -49,7 +50,7 @@ _Media Has been sent, Please wait...._`;
         },
         {
           quoted: fkontak,
-        },
+        }
       );
       await conn.sendMessage(
         m.chat,
@@ -60,13 +61,13 @@ _Media Has been sent, Please wait...._`;
         },
         {
           quoted: q,
-        },
+        }
       );
     } else if (keyword.toLowerCase() === "video") {
       if (!data) throw `*• Example :* ${usedPrefix + command} *[query]*`;
       let res = await Func.fetchJson(
         "https://pixabay.com/api/videos?key=30089426-4575ed7bbbc8bfffe9a0b8eb4&q=" +
-          data,
+          data
       );
       let rand = await Func.random(res.hits);
       let cap = `*± P I X - A B A Y*
@@ -90,7 +91,7 @@ _Media Has been sent, Please wait...._`;
         },
         {
           quoted: fkontak,
-        },
+        }
       );
       await conn.sendMessage(
         m.chat,
@@ -102,7 +103,7 @@ _Media Has been sent, Please wait...._`;
         },
         {
           quoted: q,
-        },
+        }
       );
     } else return;
   },

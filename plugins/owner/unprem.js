@@ -17,6 +17,7 @@ let handler = async (m, { conn, text, usedPrefix }) => {
   text = no(text) + "@s.whatsapp.net";
   global.db.data.users[text].premium = false;
   global.db.data.users[text].premiumDate = 0;
+  global.db.data.users[text].limit = 10;
   conn.reply(
     m.chat,
     `🚩 *Successfully removed premium access for @${text.split("@")[0]}.*`,
@@ -31,6 +32,6 @@ let handler = async (m, { conn, text, usedPrefix }) => {
 handler.help = ["unprem *<number>*"];
 handler.tags = ["owner"];
 handler.command = /^(unprem)$/i;
-handler.mods = true;
+handler.moderator = true;
 handler.fail = null;
 module.exports = handler;

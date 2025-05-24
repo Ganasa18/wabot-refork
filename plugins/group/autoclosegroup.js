@@ -151,12 +151,12 @@ schedule.scheduleJob("* * * * *", () => {
 // Command setup
 handler.help = ["autoclose <time> <unit>"];
 handler.tags = ["group"];
-handler.command =
-  /^(autoclose|closetime|tutupgrup|tutupgroup|closegroup|setclose)$/i;
+handler.command = /^(autoclose|tutupgrup|tutupgroup)$/i;
 
 handler.group = true;
 handler.admin = true;
-handler.mods = true;
+handler.botAdmin = true;
+handler.moderator = true;
 
 // example :
 // .autoclose 2 jam    (closes group after 2 hours)

@@ -83,7 +83,9 @@ const handler = async (m, { conn, text }) => {
 
 handler.help = ["lirik"];
 handler.tags = ["music"];
-handler.owner = true;
+handler.register = true;
+handler.premium = true;
+handler.limit = true;
 handler.command = /^(lirik|lyrics)$/i;
 
 module.exports = handler;

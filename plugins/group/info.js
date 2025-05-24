@@ -7,7 +7,15 @@
 */
 
 let handler = async (m, { conn, text, usedPrefix, command, groupMetadata }) => {
-  let data = store.groupMetadata[m.chat];
+  // Show processing reaction
+  conn.sendMessage(m.chat, {
+    react: {
+      text: "⏳",
+      key: m.key,
+    },
+  });
+  let data = groupMetadata;
+
   let pp;
   try {
     pp = await conn.profilePictureUrl(m.chat, "image");
@@ -22,7 +30,7 @@ let handler = async (m, { conn, text, usedPrefix, command, groupMetadata }) => {
 *• Add Others Member :* ${data.memberAddMode ? "[ ✓ ]" : "[ x ]"}
 *• Message Restrict :*  ${data.restrict ? "[ ✓ ]" : "[ x ]"}
 
-${data.desc}
+${data?.desc ? `*• Description :* ${data?.desc}` : "No Description"}
 `;
   await conn.sendMessage(
     m.chat,

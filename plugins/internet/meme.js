@@ -1,6 +1,15 @@
 const handler = async (m, { conn, text, usedPrefix, command }) => {
   const page = Math.floor(Math.random() * 10);
-  const url = `https://lahelu.com/api/post/get-search?query=${text || "jomok"}&page=${page}`;
+  // Show processing reaction
+  conn.sendMessage(m.chat, {
+    react: {
+      text: "⏳",
+      key: m.key,
+    },
+  });
+  const url = `https://lahelu.com/api/post/get-search?query=${
+    text || "jomok"
+  }&page=${page}`;
   m.reply(wait);
   try {
     const response = await fetch(url);
@@ -17,13 +26,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 *Sensitive:* ${result.sensitive ? "✅" : "❌"}
 *User Username:* ${result.userUsername}
 *====[ MEME FROM LAHELU ]====*`;
-    await conn.sendFile(
-      m.chat,
-      result.media,
-      "",
-      message,
-      m,
-    );
+    await conn.sendFile(m.chat, result.media, "", message, m);
   } catch (error) {
     console.error("Terjadi kesalahan:", error);
     conn.reply(m.chat, "❌ Terjadi kesalahan saat mengambil data", m);
@@ -32,5 +35,6 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 handler.help = ["meme"].map((a) => a + " *[random meme]*");
 handler.tags = ["internet"];
 handler.command = ["lahelu", "meme"];
+handler.limit = true;
 
 module.exports = handler;

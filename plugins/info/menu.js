@@ -108,11 +108,8 @@ const createMenuCategories = () => {
     all: {
       main: "MAIN MENU",
       fun: "FUN MENU",
-      islami: "ISLAMI MENU",
+      rohani: "ROHANI MENU",
       info: "INFO MENU",
-      ai: "AI MENU",
-      store: "STORE MENU",
-      downloader: "DOWNLOADER MENU",
       music: "MUSIC MENU",
       maker: "MAKER MENU",
       game: "GAME MENU",
@@ -120,36 +117,22 @@ const createMenuCategories = () => {
       internet: "INTERNET MENU",
       owner: "OWNER MENU",
       rpg: "RPG MENU",
-      saluran: "SALURAN MENU",
-      sticker: "STICKER MENU",
-      tools: "TOOLS MENU",
       anime: "ANIME MENU",
     },
     // Individual categories
-    downloader: { downloader: "DOWNLOADER" },
-    ai: { ai: "AI" },
     convert: { convert: "CONVERT" },
     main: { main: "MAIN" },
-    saluran: { saluran: "SALURAN" },
-    premium: { premium: "PREMIUM" },
     game: { game: "GAME" },
     maker: { maker: "MAKER" },
     group: { group: "GROUP" },
     music: { music: "MUSIC" },
     fun: { fun: "FUN" },
-    islami: { islami: "ISLAMI" },
-    textprome: { textprome: "TEXTPROME" },
-    store: { store: "STORE" },
+    rohani: { rohani: "ROHANI" },
     anime: { anime: "ANIME" },
-    jadibot: { jadibot: "JADIBOT" },
-    nsfw: { nsfw: "NSFW" },
     internet: { internet: "INTERNET" },
-    ephoto: { ephoto: "EPHOTO" },
     owner: { owner: "OWNER" },
     rpg: { rpg: "RPG" },
     info: { info: "INFO" },
-    sticker: { sticker: "STICKER" },
-    tools: { tools: "TOOLS" },
   };
 };
 
@@ -169,19 +152,9 @@ const createMenuSections = () => {
           id: ".menu all",
         },
         {
-          title: "Download Feature",
-          description: "Displays menu Download (List Menu)",
-          id: ".menu downloader",
-        },
-        {
           title: "Main Feature",
           description: "Displays menu Main (List Menu)",
           id: ".menu main",
-        },
-        {
-          title: "Ai Feature",
-          description: "Displays menu Ai (List Menu)",
-          id: ".menu ai",
         },
         {
           title: "Game Feature",
@@ -224,39 +197,14 @@ const createMenuSections = () => {
           id: ".menu maker",
         },
         {
-          title: "Sticker Feature",
-          description: "Displays menu Sticker (List Menu)",
-          id: ".menu sticker",
-        },
-        {
-          title: "Tools Feature",
-          description: "Displays menu Tools (List Menu)",
-          id: ".menu tools",
-        },
-        {
           title: "Anime Feature",
           description: "Displays menu Anime (List Menu)",
           id: ".menu anime",
         },
         {
-          title: "Quotes Feature",
-          description: "Displays menu Quotes (List Menu)",
-          id: ".menu quotes",
-        },
-        {
-          title: "Store Feature",
-          description: "Displays menu Store (List Menu)",
-          id: ".menu store",
-        },
-        {
-          title: "Islami Feature",
-          description: "Displays menu Islami (List Menu)",
-          id: ".menu islami",
-        },
-        {
-          title: "Saluran Feature",
-          description: "Displays menu Saluran (List Menu)",
-          id: ".menu saluran",
+          title: "Rohani Feature",
+          description: "Displays menu Rohani (List Menu)",
+          id: ".menu rohani",
         },
         {
           title: "Music Feature",
@@ -398,23 +346,7 @@ const generateInteractiveMessage = async (
             }),
             header: proto.Message.InteractiveMessage.Header.create({
               title: `Hello, @${user.replace(/@.+/g, "")} 🪸`,
-              subtitle: "Asyl",
-              hasMediaAttachment: true,
-              ...(await prepareWAMessageMedia(
-                {
-                  document: {
-                    url: "https://www.alfisyl.my.id/",
-                  },
-                  mimetype:
-                    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                  fileName: `Asyl Botz`,
-                  fileLength: `271000000000000`,
-                  pageCount: "100",
-                },
-                {
-                  upload: conn.waUploadToServer,
-                }
-              )),
+              subtitle: "Fuzan",
             }),
             nativeFlowMessage:
               proto.Message.InteractiveMessage.NativeFlowMessage.create({
@@ -512,20 +444,14 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
       "all",
       "main",
       "fun",
-      "islami",
+      "rohani",
       "info",
-      "ai",
       "bug",
       "jadibot",
       "store",
-      "ephoto",
       "downloader",
-      "textprome",
-      "nsfw",
       "convert",
-      "premium",
       "music",
-      "maker",
       "game",
       "group",
       "panel",

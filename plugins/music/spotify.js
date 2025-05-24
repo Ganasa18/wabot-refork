@@ -1,5 +1,12 @@
 let handler = async (m, { conn, text, usedPrefix, command }) => {
   if (!text) throw `*• Example :* ${usedPrefix + command} *[url/query]*`;
+  // Show processing reaction
+  conn.sendMessage(m.chat, {
+    react: {
+      text: "⏳",
+      key: m.key,
+    },
+  });
   if (Func.isUrl(text)) {
     let detail = await Scraper["Tools"].SpotifyApi.detail(text);
     let { download } = await Scraper["Tools"].SpotifyApi.download(text);
@@ -49,6 +56,8 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 handler.help = ["spotify"].map((a) => a + " *[search/url]*");
 handler.tags = ["music"];
 handler.command = ["spotify"];
-handler.owner = true;
+handler.register = true;
+handler.premium = true;
+handler.limit = true;
 
 module.exports = handler;

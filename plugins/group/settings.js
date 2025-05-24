@@ -1,6 +1,6 @@
 let handler = async (
   m,
-  { isAdmin, isOwner, isBotAdmin, conn, args, usedPrefix, command },
+  { isAdmin, isOwner, isBotAdmin, conn, args, usedPrefix, command }
 ) => {
   let isClose = {
     open: "not_announcement",
@@ -25,7 +25,7 @@ let handler = async (
         body: `*[ EXAMPLE GROUP SETTING ]*
 > • *Example :* ${usedPrefix + command} open
 > • *Example :*, ${usedPrefix + command} close`,
-      },
+      }
     );
     throw false;
   } else if (isClose === "announcement") {
@@ -42,7 +42,7 @@ handler.help = ["group"].map((a) => a + " *[open/close]*");
 handler.tags = ["group"];
 handler.command = ["group", "gc", "grup"];
 handler.group = true;
-handler.botAdmin = true;
 handler.admin = true;
+handler.botAdmin = true;
 
 module.exports = handler;

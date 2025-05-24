@@ -11,7 +11,9 @@ let handler = async (m, { conn, text, usedPrefix }) => {
   if (typeof db.data.users[hl] == "undefined")
     return conn.reply(m.chat, "🚩 Pengguna tidak ada didalam data base", m);
 
-  global.db.data.users[hl].mod = true;
+  global.db.data.users[hl].moderator = true;
+  global.db.data.users[hl].premium = true;
+  global.db.data.users[hl].limit = 200;
 
   conn.reply(
     m.chat,

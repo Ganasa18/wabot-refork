@@ -3,7 +3,7 @@
 // • Feature : group/tagall
 
 let handler = async (m, { conn, text, participants }) => {
-  let teks = `⋙ *PESAN DARI ADMIN GROP AKU ADMIN KALIAN MEMBER* ⋘
+  let teks = `⋙ *PESAN DARI ADMIN GROUP AKU ADMIN KALIAN MEMBER* ⋘
 \n *${text ? text : "Nothing"}*\n\n`;
   for (let mem of participants) {
     teks += ` @${mem.id.split("@")[0]}\n`;
@@ -20,5 +20,6 @@ handler.command = /^(tagall)$/i;
 
 handler.group = true;
 handler.admin = true;
+handler.botAdmin = true;
 
 module.exports = handler;

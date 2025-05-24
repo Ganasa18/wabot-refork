@@ -150,5 +150,7 @@ let handler = async (m, { conn, usedPrefix, command, args }) => {
 handler.help = ["profilecard *[nama|username|role]*"];
 handler.tags = ["maker"];
 handler.command = /^profilecard$/i;
-
+handler.register = true;
+handler.premium = true;
+handler.limit = true;
 module.exports = handler;

@@ -178,7 +178,8 @@ ${cpus
 handler.help = ["ping"];
 handler.tags = ["info"];
 handler.command = /^(ping|speed|pong|ingfo)$/i;
-handler.mods = true;
+handler.rowner = true;
+handler.owner = true;
 module.exports = handler;
 
 function clockString(ms) {

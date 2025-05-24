@@ -5,11 +5,13 @@
  */
 
 const acrcloud = require("acrcloud");
+const { premium } = require("./lirik");
 
 module.exports = {
   help: ["whatmusic"],
   tags: ["music"],
-  owner: true,
+  limit: true,
+  premium: true,
   command: [
     "whatmusic",
     "laguapa",

@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 
 // Path to database file
-const DATABASE_PATH = path.join(__dirname, "intro.json");
+const DATABASE_PATH = path.join(__dirname, "../../json/intro.json");
 
 // Delete an intro from the database
 const deleteIntro = (groupId, userId) => {

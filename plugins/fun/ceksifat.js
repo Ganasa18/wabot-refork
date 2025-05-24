@@ -1,5 +1,14 @@
 let handler = async (m, { conn, command, text }) => {
   if (!text) return conn.reply(m.chat, "*• Example :* .ceksifat aldog", m);
+
+  // Show processing reaction
+  conn.sendMessage(m.chat, {
+    react: {
+      text: "⏳",
+      key: m.key,
+    },
+  });
+
   conn.reply(
     m.chat,
     `

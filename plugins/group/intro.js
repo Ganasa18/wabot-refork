@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 
 // Path to database file
-const DATABASE_PATH = path.join(__dirname, "intro.json");
+const DATABASE_PATH = path.join(__dirname, "../../json/intro.json");
 
 // Ensure database file exists
 const ensureDatabase = () => {
@@ -128,7 +128,7 @@ IGN : ${existingIntro.ign}
 ROLE : ${existingIntro.role}
 
 Kamu sudah memiliki intro. Untuk mengubah intro, gunakan:
-${usedPrefix}intro --force Nama|Asal|Gender|IGN|Role
+${usedPrefix}intro --force Nama, Asal, Gender, IGN, Role
 
 Untuk menghapus intro, gunakan:
 ${usedPrefix}deleteintro`;
@@ -151,24 +151,25 @@ ${usedPrefix}deleteintro`;
 IGN :
 ROLE :
 
+Welcom to group! Muzan Cama Mau Tau Intro Kamu Dong
 Silahkan isi data intro kamu dengan format:
-${usedPrefix}intro Nama|Asal|Gender|IGN|Role
+${usedPrefix}intro Nama, Asal, Gender, IGN, Role
 
 Contoh:
-${usedPrefix}intro Asyl|Jakarta|Pria|AsylXYZ|Support`;
+${usedPrefix}intro Asyl, Jakarta, Pria, AsylXYZ, Support`;
 
       return m.reply(krtu);
     }
 
-    // Parse the submitted data
+    // Parse the submitted data with comma as separator
     const [nama, asal, gender, ign, role] = text
-      .split("|")
+      .split(",")
       .map((item) => item.trim());
 
     // Validate submitted data
     if (!nama || !asal || !gender || !ign || !role) {
       return m.reply(`⚠️ Format intro tidak valid! Gunakan format:
-${usedPrefix}intro Nama|Asal|Gender|IGN|Role`);
+${usedPrefix}intro Nama, Asal, Gender, IGN, Role`);
     }
 
     // Check if user already has an intro
@@ -179,7 +180,7 @@ Untuk melihat intro kamu, ketik:
 ${usedPrefix}intro
 
 Untuk mengubah intro, gunakan:
-${usedPrefix}intro --force Nama|Asal|Gender|IGN|Role
+${usedPrefix}intro --force Nama, Asal, Gender, IGN, Role
 
 Untuk menghapus intro, gunakan:
 ${usedPrefix}deleteintro`);

@@ -37,11 +37,11 @@ let handler = async (m, { conn, text, usedPrefix }) => {
 
   var now = new Date() * 1;
   global.db.data.users[hl[0]].premium = true;
+  global.db.data.users[hl[0]].limit = 50;
 
   if (isPermanent) {
     // Set to permanent premium
     global.db.data.users[hl[0]].premiumDate = 8640000000000000;
-
     conn.reply(
       m.chat,
       `• *UPGRADE PREMIUM*\n\nBerhasil menambahkan akses premium kepada *@${
@@ -112,7 +112,7 @@ handler.tags = ["owner"];
 handler.command = /^(addprem)$/i;
 handler.Puki = true;
 handler.fail = null;
-handler.mods = true;
+handler.moderator = true;
 module.exports = handler;
 
 function msToDate(ms) {

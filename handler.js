@@ -29,7 +29,7 @@ const chalk = require("chalk");
 const isNumber = (x) => typeof x === "number" && !isNaN(x);
 const delay = (ms) =>
   isNumber(ms) && new Promise((resolve) => setTimeout(resolve, ms));
-
+global.processing = new Set();
 (module.exports = {
   async handler(chatUpdate) {
     //console.log(plugins)
@@ -60,6 +60,107 @@ const delay = (ms) =>
       } catch (e) {
         console.error(e);
       }
+
+      const cooldown = 20000;
+      const now = Date.now();
+      const userData = global.db.data.users[m.sender] || {};
+      const lastCommandTime = userData.lastCommand || 0;
+      const lastCommandName = userData.lastCommandName || "";
+
+      const cooldownCommands = [
+        "menu",
+        "brat",
+        "bratvid",
+        "sticker",
+        "roast",
+        "ceksifat",
+        "tagall",
+        "play",
+        "qc",
+        "jadianime",
+        "hitamkan",
+        "cekfemboy",
+        "meme",
+        "announcegc",
+        "announce",
+        "cekpacar",
+        "japan",
+        "wangy",
+        "cosplay",
+        "jadwalanime",
+        "neko",
+        "mixemoji",
+        "tiktokstalk",
+      ];
+
+      // Function untuk extract command dan cek interactive
+      function extractCommand(m) {
+        let currentCommand = "";
+        let isInteractive = false;
+
+        // Cek interactive message
+        if (m.msg?.nativeFlowResponseMessage) {
+          try {
+            const paramsJson = JSON.parse(
+              m.msg.nativeFlowResponseMessage.paramsJson
+            );
+            if (paramsJson.id) {
+              currentCommand =
+                paramsJson.id.split(" ")[0]?.replace(/[.!#]/g, "") || "";
+              isInteractive = true;
+            }
+          } catch (error) {
+            console.error("Error parsing interactive message:", error);
+          }
+        }
+        // Cek pesan biasa
+        else {
+          const text = m.text || m.body || "";
+          currentCommand = text.split(" ")[0]?.replace(/[.!#]/g, "") || "";
+        }
+
+        return { currentCommand, isInteractive };
+      }
+
+      const { currentCommand, isInteractive } = extractCommand(m);
+
+      // Debug log
+      console.log(
+        `Command: ${currentCommand}, Interactive: ${isInteractive}, Last: ${lastCommandName}`
+      );
+
+      // Cek cooldown hanya jika:
+      // 1. Command termasuk cooldownCommands
+      // 2. BUKAN interactive message ATAU
+      //    (interactive message DAN berbeda dari command terakhir)
+      if (cooldownCommands.includes(currentCommand)) {
+        if (
+          (!isInteractive && now - lastCommandTime < cooldown) ||
+          (isInteractive &&
+            currentCommand === lastCommandName &&
+            now - lastCommandTime < cooldown)
+        ) {
+          const remainingTime = Math.ceil(
+            (cooldown - (now - lastCommandTime)) / 1000
+          );
+          return m.reply(
+            `*[ COOLDOWN ]* Tunggu ${remainingTime} detik sebelum mengirim perintah lagi.`
+          );
+        }
+      }
+
+      // Update cooldown hanya untuk pesan non-interactive atau interactive pertama
+      if (
+        !isInteractive ||
+        (isInteractive && currentCommand !== lastCommandName)
+      ) {
+        userData.lastCommand = now;
+        userData.lastCommandName = currentCommand;
+        if (!global.db.data.users[m.sender])
+          global.db.data.users[m.sender] = {};
+        Object.assign(global.db.data.users[m.sender], userData);
+      }
+
       const isROwner = [
         conn.decodeJid(global.conn.user.id),
         ...global.owner.map((a) => a + "@s.whatsapp.net"),
@@ -340,6 +441,11 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`,
             fail("unreg", m, this);
             continue;
           }
+          // CEK APAKAH USER SEDANG MENGGUNAKAN COMMAND LAIN
+          if (global.processing.has(m.sender)) {
+            m.reply("Mohon tunggu command sebelumnya selesai terlebih dahulu.");
+            continue;
+          }
           let cmd;
           m.command = command;
           m.isCommand = true;
@@ -414,6 +520,8 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`,
             chatUpdate,
           };
           try {
+            // SET USER KE DALAM SET PROCESSING SEBELUM MENJALANKAN COMMAND
+            global.processing.add(m.sender);
             await plugin.call(this, m, extra);
             if (!isPrems) m.limit = m.limit || plugin.limit || true;
           } catch (e) {
@@ -446,6 +554,8 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`,
               m.reply(e);
             }
           } finally {
+            // HAPUS USER DARI SET PROCESSING SETELAH COMMAND SELESAI ATAU ERROR
+            global.processing.delete(m.sender);
             if (typeof plugin.after === "function") {
               try {
                 await plugin.after.call(this, m, extra);
@@ -592,11 +702,12 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`,
                           title:
                             action === "add"
                               ? `┌─⭓「 *W E L C O M E* 」
+⋙ *PESAN DARI ADMIN GROUP PATUHI MUJAN CAMA* ⋘
 │ *• Name group :* ${gpname}
 │ *• Name :* ${nama}
 │ *• User tag :* @${user.split("@")[0]}
 │ *• Member :* ${member}
-│ *• Join time :* ${moment.tz("Asia/Makassar").format("HH:mm:ss")}
+│ *• Join time :* ${moment.tz("Asia/Jakarta").format("HH:mm:ss")}
 └───────────────⭓
 > Please make sure to read the group rules and have fun joining.`
                               : `┌─⭓「 *G O O D B Y E* 」
@@ -608,19 +719,19 @@ Jika berminat hubungi: @${global.owner[0]} untuk order`,
 └───────────────⭓
 > Thank You Being Member This Group.`,
                           subtitle: "",
-                          hasMediaAttachment: true,
-                          ...(await prepareWAMessageMedia(
-                            {
-                              document: fs.readFileSync("./README.md"),
-                              mimetype: `application/vnd.openxmlformats-officedocument.presentationml.presentation`,
-                              fileName: `Asyl Botz`,
-                              fileLength: `1`,
-                              pageCount: `1`,
-                            },
-                            {
-                              upload: conn.waUploadToServer,
-                            }
-                          )),
+                          // hasMediaAttachment: true,
+                          // ...(await prepareWAMessageMedia(
+                          //   {
+                          //     document: fs.readFileSync("./README.md"),
+                          //     mimetype: `application/vnd.openxmlformats-officedocument.presentationml.presentation`,
+                          //     fileName: `Asyl Botz`,
+                          //     fileLength: `1`,
+                          //     pageCount: `1`,
+                          //   },
+                          //   {
+                          //     upload: conn.waUploadToServer,
+                          //   }
+                          // )),
                         }),
                         gifPlayback: true,
                         nativeFlowMessage:

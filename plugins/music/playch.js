@@ -77,7 +77,8 @@ let handler = async (m, { conn, text }) => {
 handler.help = ["playch"];
 handler.tags = ["music", "saluran"];
 handler.command = /^(playch)$/i;
+handler.register = true;
+handler.premium = true;
 handler.limit = true;
-handler.owner = true;
 
 module.exports = handler;

@@ -1,9 +1,7 @@
 module.exports = {
-  help: ["cekkhodam"].map(
-    (a) => a + " *[random khodam]*",
-  ),
+  help: ["cekkhodam"].map((a) => a + " *[random khodam]*"),
   tags: ["fun"],
-  command: ["cekkodam", "khodam", "cekkhodam", "ck"],
+  command: ["cekkodam"],
   code: async (
     m,
     {
@@ -16,9 +14,17 @@ module.exports = {
       isBotAdmin,
       isPrems,
       chatUpdate,
-    },
+    }
   ) => {
+    let target = text || m.pushName;
     async function cekkhodam() {
+      // Show processing reaction
+      conn.sendMessage(m.chat, {
+        react: {
+          text: "⏳",
+          key: m.key,
+        },
+      });
       const animals = [
         "Kucing",
         "Tikus",
@@ -167,7 +173,50 @@ module.exports = {
         "Menangis",
         "Tertawa",
         "Bersorak",
+        "Merunduk",
+        "Berkelip",
+        "Menggigit",
+        "Berdiri Tegak",
+        "Menjerit",
+        "Menggulingkan",
+        "Bersantai",
+        "Bertahan",
+        "Menjaga Teritori",
+        "Mengintip",
+        "Menghancurkan",
+        "Berkendara",
+        "Menari",
+        "Berkeliling",
+        "Bertempur",
+        "Menghindar",
+        "Berlari Kencang",
+        "Menjauh",
+        "Bersuara Keras",
+        "Memanjat",
+        "Menyelinap",
+        "Meluncur",
+        "Menepuk",
+        "Mengeluarkan Api",
+        "Menyambar",
+        "Mengguncang",
+        "Membayangi",
+        "Menyodok",
+        "Mencakar",
+        "Mendekati",
+        "Membalikkan",
+        "Menembus",
+        "Menyapu",
+        "Menyerbu",
+        "Menarik Perhatian",
+        "Menyeret",
+        "Menghitung",
+        "Bersiap",
+        "Menjaga Jarak",
+        "Mengejar",
+        "Membisikkan",
+        "Mengikuti",
       ];
+
       const things = [
         "Speaker JBL",
         "Toa Masjid",
@@ -349,6 +398,41 @@ module.exports = {
         "menyediakan alat pancing lengkap",
         "menyediakan alat membuat kue lengkap",
         "menyediakan alat menjahit lengkap",
+        "membangkitkan kreativitas dengan warna-warna cerah",
+        "memberikan kenyamanan dengan desain ergonomis",
+        "menghadirkan kebahagiaan dalam setiap sentuhan",
+        "membuat setiap hari lebih efisien",
+        "menyediakan tempat untuk semua kebutuhan",
+        "memberikan pengalaman menyenangkan dalam setiap langkah",
+        "menghidupkan suasana dengan cahaya lembut",
+        "menyediakan akses ke hiburan tanpa batas",
+        "mempermudah segala pekerjaan rumah tangga",
+        "membantu merencanakan masa depan dengan bijak",
+        "menawarkan kenyamanan lebih dalam setiap perjalanan",
+        "menyediakan kebutuhan gaya hidup modern",
+        "menambah kemewahan di rumah",
+        "membawa kehangatan dalam cuaca dingin",
+        "menciptakan kenyamanan dengan suasana yang tenang",
+        "menyegarkan ruangan dengan aroma alami",
+        "menyediakan kecepatan internet yang luar biasa",
+        "menyajikan minuman dingin dengan sempurna",
+        "menyediakan ruang penyimpanan yang luas",
+        "memudahkan akses informasi dalam genggaman tangan",
+        "mempercepat proses pembuatan keputusan",
+        "menambah semangat dengan desain inovatif",
+        "memfasilitasi gaya hidup aktif",
+        "menghadirkan kemudahan dalam setiap pekerjaan",
+        "menjadi pusat kenyamanan dalam rumah",
+        "membantu dalam mengatur waktu dengan lebih efektif",
+        "memberikan kepraktisan dalam setiap aktivitas",
+        "menciptakan atmosfer damai dengan suara alami",
+        "menyediakan solusi untuk kebutuhan sehari-hari",
+        "menghasilkan tekstur halus pada kulit",
+        "menyempurnakan ruang dengan kualitas terbaik",
+        "menyajikan kebaikan dalam setiap detiknya",
+        "membawa keindahan alam ke dalam rumah",
+        "mempermudah pengalaman masak-memasak",
+        "menambah kenyamanan dalam tidur malam",
       ];
 
       const description = randomTest
@@ -368,7 +452,7 @@ module.exports = {
     const result = await cekkhodam();
     //KONTOL DARI ALOK - WM BINARY
     await m.reply(
-      `- Khodam yang ada didalam diri \`@${m.quoted ? m.quoted.sender.split("@")[0] : m.sender.split("@")[0]}\` : ${result.khodam}\n\n> Penjelasan: ${result.description}`,
+      `- Khodam yang ada didalam diri \`${target}\` : ${result.khodam}\n\n> Penjelasan: ${result.description}`
     );
   },
 };

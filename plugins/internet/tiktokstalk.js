@@ -10,7 +10,13 @@ const cheerio = require("cheerio");
 
 const handler = async (m, { text, args, usedPrefix, command }) => {
   if (!text) return m.reply(`• Contoh:\n${usedPrefix + command} ins_mys3lv`);
-
+  // Show processing reaction
+  conn.sendMessage(m.chat, {
+    react: {
+      text: "⏳",
+      key: m.key,
+    },
+  });
   try {
     const url = await fetch(`https://tiktok.com/@${text}`, {
       headers: {

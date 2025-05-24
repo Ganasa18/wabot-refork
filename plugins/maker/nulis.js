@@ -23,5 +23,7 @@ let handler = async (m, { conn, text, usedPrefix }) => {
 handler.help = ["n"].map((v) => v + "ulis <teks>");
 handler.tags = ["maker"];
 handler.command = /^nulis$/i;
+handler.register = true;
 handler.premium = true;
+handler.limit = true;
 module.exports = handler;

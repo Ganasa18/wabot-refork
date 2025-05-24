@@ -59,6 +59,7 @@
     "qrcode-reader": "^1.0.4",
     "qs": "^6.11.2",
     "serpapi": "^2.1.0",
+    "sharp": "^0.34.2",
     "similarity": "^1.2.1",
     "socket.io": "^4.5.1",
     "steno": "^4.0.2",

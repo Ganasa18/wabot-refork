@@ -1,14 +1,14 @@
 /*
 // Simple Base Botz
 // • Credits : wa.me/62895322391225 [ Asyl ]
-// • Feature : group/listintro
+// • Feature : group/listintro with CSV download
 */
 
 const fs = require("fs");
 const path = require("path");
 
 // Path to database file
-const DATABASE_PATH = path.join(__dirname, "intro.json");
+const DATABASE_PATH = path.join(__dirname, "../../json/intro.json");
 
 // Get intro data for a group
 const getIntros = (groupId) => {
@@ -32,6 +32,20 @@ const getIntros = (groupId) => {
     console.error("Error reading intros:", error);
     return null;
   }
+};
+
+// Function to generate CSV content
+const generateCSV = (intros) => {
+  let csvContent = "No;User ID;Nama;Asal;Gender;IGN;Role\n";
+
+  let num = 1;
+  for (const [userId, data] of Object.entries(intros)) {
+    csvContent += `${num++};${userId};${data.nama};${data.asal};${
+      data.gender
+    };${data.ign};${data.role}\n`;
+  }
+
+  return csvContent;
 };
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
@@ -68,7 +82,28 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       introList += `ROLE : ${data.role}\n\n`;
     }
 
-    introList += `\nUntuk mengisi intro, ketik: ${usedPrefix}intro`;
+    introList += `\nUntuk mengisi intro, ketik: ${usedPrefix}intro\n\n`;
+    introList += `*Download CSV:* ${usedPrefix}listintro csv`;
+
+    // Check if CSV download is requested
+    if (args[0]?.toLowerCase() === "csv") {
+      const csvContent = generateCSV(intros);
+      const filename = `intro_${m.chat}_${Date.now()}.csv`;
+
+      // Save temporary file
+      fs.writeFileSync(filename, csvContent);
+
+      // Send file
+      await conn.sendMessage(m.chat, {
+        document: fs.readFileSync(filename),
+        fileName: filename,
+        mimetype: "text/csv",
+      });
+
+      // Delete temporary file
+      fs.unlinkSync(filename);
+      return;
+    }
 
     return m.reply(introList);
   } catch (error) {
@@ -77,9 +112,11 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   }
 };
 
-handler.help = ["listintro"];
+handler.help = ["listintro [csv]"];
 handler.tags = ["group"];
-handler.command = /^(listintro|introlist|daftarintro)$/i;
+handler.command = /^(listintro|introlist)$/i;
 handler.group = true;
+handler.admin = true;
+handler.botAdmin = true;
 
 module.exports = handler;
